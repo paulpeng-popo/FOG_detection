@@ -1,0 +1,97 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%\usepackage[review]{cvpr}      % To produce the REVIEW version
+%\usepackage{cvpr}              % To produce the CAMERA-READY version
+\usepackage[pagenumbers]{cvpr} % To force page numbers, e.g. for an arXiv version
+
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage[BoldFont, SlantFont]{xeCJK}
+\setCJKmainfont{DFKai-SB}
+\setCJKmonofont{DFKai-SB}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+
+\usepackage[pagebackref,breaklinks,colorlinks]{hyperref}
+
+
+% Support for easy cross-referencing
+\usepackage[capitalize]{cleveref}
+\crefname{section}{Sec.}{Secs.}
+\Crefname{section}{Section}{Sections}
+\Crefname{table}{Table}{Tables}
+\crefname{table}{Tab.}{Tabs.}
+
+
+%%%%%%%%% PAPER ID
+\def\cvprPaperID{*****}
+\def\confName{CVPR}
+\def\confYear{2022}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Abnormal Gait Detection for Medical Application using AI Technology Integrated Wearable Devices}
+
+\author{徐卓朗 P76095018\\
+National Cheng Kung University\\
+{\tt\small p76095018@gs.ncku.edu.tw}
+\and
+胡雋 P46104293\\
+National Cheng Kung University\\
+{\tt\small P46104293@gs.ncku.edu.tw}
+\and
+彭煜博 P76111123\\
+National Cheng Kung University\\
+{\tt\small p76111123@gs.ncku.edu.tw}
+}
+\maketitle
+
+%%%%%%%%% ABSTRACT
+% \begin{abstract}
+%   Among Parkinson’s disease (PD) motor symptoms, freezing of gait (FOG) may be the most incapacitating. FOG episodes may result in falls and reduce patients’ quality of life. Accurate assessment of FOG would provide objective information to neurologists about the patient’s condition and the symptom’s characteristics, while it could enable non-pharmacologic support based on rhythmic cues.
+
+%   This paper propose a deep learning method for monitoring FOG episodes in PD patients. This model is trained using a novel spectral data representation strategy which considers information from both the previous and current signal windows. Our approach was evaluated using data collected by a waist-placed inertial measurement unit from 21 PD patients who manifested FOG episodes. These data were also employed to reproduce the state-of-the-art methodologies, which served to perform a comparative study to our FOG monitoring system.
+  
+%   The results of this study demonstrate that our approach successfully outperforms the state-of-the-art methods for automatic FOG detection. Precisely, the deep learning model achieved 90\% for the geometric mean between sensitivity and specificity, whereas the state-of-the-art methods were unable to surpass the 83\% for the same metric.
+% \end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+\label{sec:intro}
+
+Walking is an activity that everyone must do every day. Although it is a prevalent action, we can learn about a person's lifestyle, personal habits, and even health information by observing their way of walking. For example, if a person has a left foot injury, his center of gravity will be concentrated on the right foot, and his stride may be shorter. If a 100-meter runner, his stride will be solid and hefty. Besides, his toes will need to afford the whole body weight. If a person is about to fall, his steps will suddenly appear disordered. If a right-brain stroke patient, his left toes will land first while walking; meanwhile, the center of gravity will bias toward the right side of the body.~\cite{10.1007/978-3-319-59147-6_30}
+
+From the above information, we learn that observing one's walking can judge a person's physical state, but how do we define a person's walking action? Now, we represent a person's walking step in the gait cycle (GC). The GC refers to the period from when a person's heel touches the ground until the same heel touches the ground again. The cycle can divide into three phases, Stance phase, Swing phase, and Double limb support. Observing the changes in foot pressure during the GC can help estimate a person's physical state, predict the dangers encountered, and issue timely help or medical services.~\cite{CAMPS2018119}
+
+It is worth noting that although the above description is desirable, the first problem we will encounter when conducting gait detection research is how to effectively collect pace data and use appropriate algorithms to perform calculations. In addition, it is necessary to define this experimental subject of our works clearly. Therefore, to solve these problems, we have to conduct a systematic analysis, and the next section will introduce how we carried out this project.~\cite{NUTT2011734}
+
+%------------------------------------------------------------------------
+\section{System framework}
+\label{sec:framework}
+
+This project will dedicate three parts: data collection and analysis, model training, and model validation.
+
+Data collection uses a wearable device that integrates a pressure sensor sheet that provides a microcontroller unit (MCU). For example, the sensor can receive pressure data from the examinee's foot while he steps on the ground. This collected data is then buffered and sent to our computation devices which will later be analyzed and restructured into a neural network training structure. In this project, the examinees will be our team members with intentionally abnormal walking gaits.
+
+Model training uses Tensorflow with the Keras framework for building. And our works will operate previously collected data to train a classification network where a classifier can identify which form of data is "Normal" or "Abnormal."
+
+Model validation consists of a patient to see if the model can provide real-time feedback and classify if the walking gait is abnormal by passing a few data in the last few time frames into the model.
+
+%-------------------------------------------------------------------------
+\section{Expected results}
+
+A classification network that allows anyone to check their walking gait and provide feedback if an abnormality is detected.
+
+%%%%%%%%% REFERENCES
+{\small
+\bibliographystyle{ieee_fullname}
+\bibliography{egbib}
+}
+
+\end{document}

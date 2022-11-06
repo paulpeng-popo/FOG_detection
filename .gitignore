@@ -9,3 +9,5 @@
 *.fls
 *.synctex.gz
 *.xdv
+code/
+.DS_Store

@@ -245,7 +245,7 @@ Validation consists of a patient to see if our model can provide real-time feedb
 \label{sec:lstm}
 
 % \textcolor{blue}{
-    For FOG detection, LSTM networks were setup using a multiple-input (multiple datapoint) multiple-output (multiple datapoint) architecture in which all datapoints were used as model inputs and each datapoint in the test instances was classified by the model~\cite{Shalin2021}. Each LSTM layer returned the full sequence to the model’s next layer. This allowed the model to classify each timestamp as belonging to the FOG or Non-FOG class. LSTM layers used a hyperbolic tangent (tanh) activation function, followed by a time-distributed fully connected layer (i.e., output at each time step passes through the fully connected layer) with 2 units and Softmax activation. Models were trained with the Adam optimizer, using 0.9 decay rate for the first and 0.999 decay rate for the second moment estimates, and a cross entropy loss function.
+    For FOG detection, LSTM networks were setup using a multiple-input (multiple datapoint) multiple-output (multiple datapoint) architecture in which all datapoints were used as model inputs and each datapoint in the test instances was classified by the model~\cite{Shalin2021}. Each LSTM layer returned the full sequence to the model’s next layer. This allowed the model to classify each timestamp as belonging to the FOG or Non-FOG class. LSTM layers used a hyperbolic tangent (tanh) activation function, followed by a time-distributed fully connected layer (i.e., output at each time step passes through the fully connected layer) with 2 units and Softmax activation. Models were trained with the Adam optimizer and a cross entropy loss function.
 % }
 
 \subsubsection{Our model}
@@ -254,7 +254,7 @@ Validation consists of a patient to see if our model can provide real-time feedb
 % \textcolor{blue}{
     Before we start training, we search for some proposed papers, try to find some basic model for FOG detection. Consider with our data structure, we simply designed two way to train the model. The first way is LSTM model. The second way is CNN model (Figure \ref{fig:f9}). Apparaently, the LSTM model is more suitable for our data structure.
 
-    We proposed two basic model for FOG detection. First model is shown in Figure \ref{fig:f10}. The model is a pure two layer LSTM model. The first layer has 128 units and the second layer has 64 units. Second model is shown in Figure \ref{fig:f11}. The model is a two layer LSTM model with dropout and dense layer.~\cite{10.1162/neco.1997.9.8.1735} The first layer has 64 units and the second layer has 32. The dropout rate is 0.2 and the dense layer has 2 units with Relu activation. Both models are trained with 20 epochs and the batch size is 32. The model is trained with the Adam optimizer, using 0.9 decay rate for the first and 0.999 decay rate for the second moment estimates, and a cross entropy loss function.
+    We proposed two basic model for FOG detection. First model is shown in Figure \ref{fig:f10}. The model is a pure two layer LSTM model. The first layer has 128 units and the second layer has 64 units. Second model is shown in Figure \ref{fig:f11}. The model is a two layer LSTM model with dropout and dense layer.~\cite{10.1162/neco.1997.9.8.1735} The first layer has 64 units and the second layer has 32. The dropout rate is 0.2 and the dense layer has 2 units with Relu activation. Both models are trained with 20 epochs and the batch size is 32.
 % }
 
 \section{Results and Discussion}
@@ -300,6 +300,9 @@ Validation consists of a patient to see if our model can provide real-time feedb
     \label{fig:f15}
 \end{figure}
 
+\subsection{Our collected Dataset}
+\label{sec:our dataset}
+
 % \textcolor{blue}{
     In our first proposed model 1, we can see that the accuracy is almost 1.0 and the loss can be reduced to 0.001 or lower, which means the model is trained well. For a deeper analysis, because of not enough training data and data imbalancing, the model easily goes overfitting on specific data distributed.
 
@@ -312,10 +315,61 @@ Validation consists of a patient to see if our model can provide real-time feedb
     \centering
     \fbox{
         \rule{0pt}{2in} 
-        \includegraphics[width=.9\linewidth, height=9cm]{./images/revised.png}
+        \includegraphics[width=.9\linewidth, height=7cm]{./images/revised.png}
     }
     \caption{Data augmentation result.}
     \label{fig:f16}
+\end{figure}
+
+\subsection{BMI SmartInsole Dataset}
+\label{sec:additional dataset}
+
+% \textcolor{blue}{
+    In some of our studied use cases, an ankle attached accelerometer might not be feasible. Hence, we are proposing an alternative classification model with data collected by a pair of pressure sensitive insoles for FOG detections. The dataset we are using was contributed by \textbf{The Biomedical Informatics \& eHealth Laboratory (BMI Lab)}.~\cite{smartinsole2021}, and it classify the collected data into the categories shown in Figure \ref{fig:f17}.
+
+    BMI SmartInsole data has three group of examinees, which are mature adults, elderly and FOG patients. The data are collected by a pair of pressure sensitive insoles. We combined the data from mature and elderly as the normal data, and the data from FOG patients as the abnormal data. These data contained 52 columns of pressure value, 26 columns for each insole. With respect to the data we collected ourself, we choose WALK type of data (WAL, WAS, WAF)(Figure \ref{fig:f17}) for training.
+
+    The data collected are in the shape of a 2D array, and in sequence of the time of the generation. These data are then flattened into a 1D array by the original author. Thus, we are using multiple convolution layers to analyze and train the model. The model structure is illustrated in Figure \ref{fig:f18}. In all the convolution layers, ReLU is used as the activation function. The results of the training is shown in Figure \ref{fig:f19} and Figure \ref{fig:f20} with maximum accuracy of 0.972 with test accuracy of 0.941. This proved that the use of pressure sensitive insole might also be used for FOG detection with relatively high accuracy.
+% }
+
+\begin{figure}[t]
+    \centering
+    \fbox{
+        \rule{0pt}{2in} 
+        \includegraphics[width=.9\linewidth, height=4.5cm]{./images/insole_type.png}
+    }
+    \caption{BMI SmartInsole dataset.}
+    \label{fig:f17}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \fbox{
+        \rule{0pt}{2in} 
+        \includegraphics[width=.9\linewidth, height=7cm]{./images/cnnlstm.png}
+    }
+    \caption{Our proposed CNN-BiLSTM model.}
+    \label{fig:f18}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \fbox{
+        \rule{0pt}{2in} 
+        \includegraphics[width=.9\linewidth, height=4.5cm]{./images/acceleration_acc.png}
+    }
+    \caption{CNN-BiLSTM model accuracy.}
+    \label{fig:f19}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \fbox{
+        \rule{0pt}{2in} 
+        \includegraphics[width=.9\linewidth, height=4.5cm]{./images/acceleration_loss.png}
+    }
+    \caption{CNN-BiLSTM model loss.}
+    \label{fig:f20}
 \end{figure}
 
 %-------------------------------------------------------------------------
@@ -349,12 +403,6 @@ Validation consists of a patient to see if our model can provide real-time feedb
     % With more complex model structure design and collected data
     % Add a post processing algorithm to filter out noise
 % \end{itemize}
-
-%-------------------------------------------------------------------------
-\section{Expected results}
-\label{sec:results}
-
-A classification network that allows anyone to check their walking gait and provide feedback if an abnormality is detected. The network will be able to detect FOG and other walking gait issues.
 
 %%%%%%%%% REFERENCES
 {\small
